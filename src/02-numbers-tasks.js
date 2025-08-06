@@ -107,8 +107,19 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  // 1. Вычисляем скалярное произведение
+  const dotProduct = x1 * x2 + y1 * y2;
+
+  // 2. Вычисляем длины векторов
+  const len1 = Math.sqrt(x1 * x1 + y1 * y1);
+  const len2 = Math.sqrt(x2 * x2 + y2 * y2);
+
+  // 3. Вычисляем косинус угла
+  const cosTheta = dotProduct / (len1 * len2);
+
+  // 4. Возвращаем угол через арккосинус
+  return Math.acos(cosTheta);
 }
 
 /**
