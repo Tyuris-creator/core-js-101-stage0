@@ -1,14 +1,12 @@
-function propagateItemsByPositionIndex(arr) {
-  let count = 1;
-  return arr.reduce((acc, el) => {
-    console.log(typeof el)
-    const elements = el.repeat(count).split('');
-    count += 1;
-    acc.push(...elements);
-    return acc;
-  }, []);
+function swapHeadAndTail(arr) {
+  const len = arr.length;
+  const half = len / 2;
+  const array1 = arr.slice(Math.ceil(half), len);
+  const array2 = arr.slice(0, Math.ceil(half));
+  return [...array1, ...array2];
 }
-console.log(propagateItemsByPositionIndex(['a', 'b']));
+
+console.log(swapHeadAndTail([ 1]))
 
 
-console.log([].length)
+console.log([12,12,3,1,2,6,4,3].slice(-3))
