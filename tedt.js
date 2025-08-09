@@ -1,16 +1,22 @@
-function reverseString(str) {
-  const arr = str.split("");
-  console.log(arr)
-  const newArr = [];
-  const lastIndex = arr.length - 1;
-  console.log(lastIndex)
-  for (let i = lastIndex; i >= 0; i -= 1) {
-    console.log(i)
-    newArr.push(arr[i]);
+function getDigitalRoot(num) {
+  let sum = 0;
+  let iterator = num
+  while (iterator > 0) {
+    sum += iterator % 10;
+    iterator = Math.floor(iterator / 10);
   }
-  return newArr;
+  iterator = 0
+  if (sum > 9) {
+    iterator = sum;
+    sum = 0;
+    while (iterator > 0) {
+      sum += iterator % 10;
+      iterator = Math.floor(iterator / 10);
+    }
+  }
+  return sum;
 }
 
 
 
-console.log(reverseString("The quick brown fox jumps over the lazy dog"))
+console.log(getDigitalRoot(23456))
