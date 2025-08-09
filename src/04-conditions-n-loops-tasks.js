@@ -215,8 +215,14 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  const arr = str.split('');
+  const newArr = [];
+  const lastIndex = arr.length - 1;
+  for (let i = lastIndex; i >= 0; i -= 1) {
+    newArr.push(arr[i]);
+  }
+  return newArr.join('');
 }
 
 /**
@@ -231,8 +237,14 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  let iterator = num;
+  let str = '';
+  while (iterator > 0) {
+    str += `${iterator % 10}`;
+    iterator = Math.floor(iterator / 10);
+  }
+  return Number(str);
 }
 
 /**

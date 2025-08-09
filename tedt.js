@@ -1,12 +1,16 @@
-function swapHeadAndTail(arr) {
-  const len = arr.length;
-  const half = len / 2;
-  const array1 = arr.slice(Math.ceil(half), len);
-  const array2 = arr.slice(0, Math.ceil(half));
-  return [...array1, ...array2];
+function reverseString(str) {
+  const arr = str.split("");
+  console.log(arr)
+  const newArr = [];
+  const lastIndex = arr.length - 1;
+  console.log(lastIndex)
+  for (let i = lastIndex; i >= 0; i -= 1) {
+    console.log(i)
+    newArr.push(arr[i]);
+  }
+  return newArr;
 }
 
-console.log(swapHeadAndTail([ 1]))
 
 
-console.log([12,12,3,1,2,6,4,3].slice(-3))
+console.log(reverseString("The quick brown fox jumps over the lazy dog"))
