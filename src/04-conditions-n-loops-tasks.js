@@ -128,8 +128,21 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  const r1x1 = rect1.left;
+  const r1x2 = rect1.left + rect1.width;
+  const r1y1 = rect1.top;
+  const r1y2 = rect1.top + rect1.height;
+
+  const r2x1 = rect2.left;
+  const r2x2 = rect2.left + rect2.width;
+  const r2y1 = rect2.top;
+  const r2y2 = rect2.top + rect2.height;
+
+  const overlapX = !(r1x2 < r2x1 || r2x2 < r1x1);
+  const overlapY = !(r1y2 < r2y1 || r2y2 < r1y1);
+
+  return overlapX && overlapY;
 }
 
 /**
@@ -409,8 +422,19 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  if (num === 0) return '0';
+
+  const digits = [];
+  let number = num;
+
+  while (number > 0) {
+    const remainder = number % n;
+    digits.push(remainder);
+    number = Math.floor(number / n);
+  }
+
+  return digits.reverse().join('');
 }
 
 /**
@@ -425,8 +449,35 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  if (pathes.length === 0) return '';
+
+  const partsList = pathes.map((path) => path.split('/'));
+  const minLength = Math.min(...partsList.map((parts) => parts.length));
+  const commonParts = [];
+
+  for (let i = 0; i < minLength; i += 1) {
+    const current = partsList[0][i];
+    let allMatch = true;
+
+    for (let j = 1; j < partsList.length; j += 1) {
+      if (partsList[j][i] !== current) {
+        allMatch = false;
+        break;
+      }
+    }
+
+    if (!allMatch) break;
+    commonParts.push(current);
+  }
+
+  if (commonParts.length === 0) return '';
+
+  let result = commonParts.join('/');
+  if (result === '') result = '/';
+  else if (!result.endsWith('/')) result += '/';
+
+  return result;
 }
 
 /**
@@ -447,8 +498,32 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  // Проверка возможности умножения
+  if (m1[0].length !== m2.length) {
+    throw new Error('Matrices cannot be multiplied');
+  }
+
+  const rows = m1.length; // Строки результата
+  const cols = m2[0].length; // Столбцы результата
+  const n = m2.length; // Общий размер для умножения
+
+  // Создаем пустую результирующую матрицу
+  const result = new Array(rows);
+  for (let i = 0; i < rows; i += 1) {
+    result[i] = new Array(cols).fill(0);
+  }
+
+  // Заполняем результат
+  for (let i = 0; i < rows; i += 1) {
+    for (let j = 0; j < cols; j += 1) {
+      for (let k = 0; k < n; k += 1) {
+        result[i][j] += m1[i][k] * m2[k][j];
+      }
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -481,8 +556,51 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const size = 3; // Размер игрового поля 3x3
+
+  // Проверка строк
+  for (let row = 0; row < size; row += 1) {
+    if (
+      position[row][0] &&
+      position[row][0] === position[row][1] &&
+      position[row][0] === position[row][2]
+    ) {
+      return position[row][0];
+    }
+  }
+
+  // Проверка столбцов
+  for (let col = 0; col < size; col += 1) {
+    if (
+      position[0][col] &&
+      position[0][col] === position[1][col] &&
+      position[0][col] === position[2][col]
+    ) {
+      return position[0][col];
+    }
+  }
+
+  // Проверка главной диагонали
+  if (
+    position[0][0] &&
+    position[0][0] === position[1][1] &&
+    position[0][0] === position[2][2]
+  ) {
+    return position[0][0];
+  }
+
+  // Проверка побочной диагонали
+  if (
+    position[0][2] &&
+    position[0][2] === position[1][1] &&
+    position[0][2] === position[2][0]
+  ) {
+    return position[0][2];
+  }
+
+  // Если победитель не найден
+  return undefined;
 }
 
 module.exports = {
