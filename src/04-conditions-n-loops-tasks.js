@@ -158,8 +158,12 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  const dx = point.x - circle.center.x;
+  const dy = point.y - circle.center.y;
+  const distanceSquared = dx * dx + dy * dy;
+  const radiusSquared = circle.radius * circle.radius;
+  return distanceSquared < radiusSquared;
 }
 
 /**
@@ -173,8 +177,22 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const charCount = {}; // Объект для подсчёта символов
+
+  // Считаем, сколько раз каждый символ встречается
+  for (let i = 0; i < str.length; i += 1) {
+    charCount[str[i]] = (charCount[str[i]] || 0) + 1;
+  }
+
+  // Ищем первый символ с количеством 1
+  for (let i = 0; i < str.length; i += 1) {
+    if (charCount[str[i]] === 1) {
+      return str[i];
+    }
+  }
+
+  return null; // Если не нашли
 }
 
 /**
@@ -199,8 +217,17 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  // Определяем меньшую и большую границу
+  const start = Math.min(a, b);
+  const end = Math.max(a, b);
+
+  // Выбираем скобки в зависимости от флагов включения
+  const leftBracket = isStartIncluded ? '[' : '(';
+  const rightBracket = isEndIncluded ? ']' : ')';
+
+  // Собираем строку интервала
+  return `${leftBracket}${start}, ${end}${rightBracket}`;
 }
 
 /**
@@ -267,8 +294,24 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const array = ccn.toString().split('').reverse();
+  let sumOfOddDigits = 0;
+  for (let i = 0; i < array.length; i += 2) {
+    sumOfOddDigits += Number(array[i]);
+  }
+
+  let sumOfEvenDigits = 0;
+  for (let i = 1; i < array.length; i += 2) {
+    let number = Number(array[i]) * 2;
+    if (number >= 10) {
+      number = Math.floor(number / 10) + (number % 10);
+    }
+    sumOfEvenDigits += number;
+  }
+
+  const total = sumOfEvenDigits + sumOfOddDigits;
+  return total % 10 === 0;
 }
 
 /**
@@ -325,8 +368,25 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const stack = [];
+  const pairs = {
+    '[': ']',
+    '(': ')',
+    '{': '}',
+    '<': '>',
+  };
+  for (let char = 0; char <= str.length; char += 1) {
+    if (pairs[str[char]]) {
+      stack.push(str[char]);
+    } else {
+      const lastOpen = stack.pop();
+      if (pairs[lastOpen] !== str[char]) {
+        return false;
+      }
+    }
+  }
+  return stack.length === 0;
 }
 
 /**
